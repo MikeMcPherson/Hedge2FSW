@@ -46,11 +46,6 @@ module dHedge2 {
     stack size Default.STACK_SIZE \
     priority 40
 
-  instance sci: Components.SCI base id 0x10005000 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 40
-
   # ----------------------------------------------------------------------
   # Queued component instances
   # ----------------------------------------------------------------------
@@ -70,50 +65,4 @@ module dHedge2 {
 
   instance comDriver: Drv.TcpServer base id 0x10014000
 
-  instance bufferManager: Svc.BufferManager base id 0x4400 \
-  {
-    phase Fpp.ToCpp.Phases.configComponents """
-    Fw::MallocAllocator m_allocator;
-    Svc::BufferManager::BufferBins bufferManagerBins;
-    memset(&bufferManagerBins, 0, sizeof(bufferManagerBins));
-    {
-      bufferManagerBins.bins[0].bufferSize = 1024;
-      bufferManagerBins.bins[0].numBuffers = 100;
-      bufferManager.setup(
-          200,
-          0,
-          m_allocator,
-          bufferManagerBins
-      );
-    }
-    """
-  }
-
-  @ UART driver instance. Configured to use a Linux UART driver
-  instance uartDrv: Drv.LinuxUartDriver base id 0x0F00 \
-  {
-    phase Fpp.ToCpp.Phases.configComponents """
-      const bool status = uartDrv.open("/dev/ttyAMA5",
-          Drv::LinuxUartDriver::BAUD_9600,
-          Drv::LinuxUartDriver::NO_FLOW,
-          Drv::LinuxUartDriver::PARITY_NONE,
-          1024
-      );
-      if (status) 
-      {
-        printf("Successfully opened UART driver\\n");
-        uartDrv.start();
-      } else 
-      {
-        printf("[ERROR]: Could not open UART driver\\n");
-      }
-    """
-
-    phase Fpp.ToCpp.Phases.stopTasks """
-    uartDrv.quitReadThread();
-    """
-  }
-
-  instance gpioDriver: Drv.LinuxGpioDriver base id 0x0F10
-
-  }
+}

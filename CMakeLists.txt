@@ -18,5 +18,3 @@ fprime_setup_included_code()
 # This includes project-wide objects
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Hedge2fsw")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/dHedge2/")
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/dHuart/")
-add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/dHtcp/")

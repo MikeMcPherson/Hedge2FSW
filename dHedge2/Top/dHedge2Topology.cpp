@@ -49,14 +49,6 @@ void configureTopology() {
 
     // Command sequencer needs to allocate memory to hold contents of command sequences
     cmdSeq.allocateBuffer(0, mallocator, 5 * 1024);
-
-    Os::File::Status status =
-    gpioDriver.open("/dev/gpiochip0", 26, Drv::LinuxGpioDriver::GpioConfiguration::GPIO_OUTPUT);
-    if (status != Os::File::Status::OP_OK) {
-        Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
-    } else {
-        Fw::Logger::log("Successfully opened GPIO pin\n");
-    }
 }
 
 void setupTopology(const TopologyState& state) {

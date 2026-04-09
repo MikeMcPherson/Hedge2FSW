@@ -32,10 +32,6 @@ module dHedge2 {
     instance timer
     instance comDriver
     instance cmdSeq
-    instance bufferManager
-    instance uartDrv
-    instance gpioDriver
-    instance sci
 
   # ----------------------------------------------------------------------
   # Pattern graph specifiers
@@ -132,10 +128,7 @@ module dHedge2 {
     }
 
     connections dHedge2 {
-      uartDrv.allocate -> bufferManager.bufferGetCallee
-      sci.deallocate -> bufferManager.bufferSendIn
-      uartDrv.$recv -> sci.SciRecv
-      sci.gpioSet -> gpioDriver.gpioWrite
+
     }
 
   }
